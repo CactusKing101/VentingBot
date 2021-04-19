@@ -36,6 +36,7 @@ client.on('message', async msg => {
         avatarURL: guild.iconURL(),
         embeds: [embed],
       });
+      msg.author.send('Your message has been sent to the venting channel. Your life is important. We all care very deeply about you. Please know we are all here for you.\n*Keep in mind you can always request to delete a message you sent by dming CactusKing101#2624*');
       var tempData = {
         main: main,
         id: id

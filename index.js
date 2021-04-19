@@ -13,6 +13,7 @@ client.once('ready', () => {
 });
 
 client.on('message', async msg => {
+  if (msg.author.bot) return;
   const ventCh = client.channels.cache.get('833730808686575626');
   const guild = client.guilds.cache.get('830495072876494879');
   if (msg.channel.type == 'dm') {

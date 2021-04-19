@@ -18,7 +18,10 @@ client.on('message', async msg => {
   if (msg.channel.type == 'dm') {
     let banned = false;
     for(let i = 0; i < config.banned.length; ++i) {
-
+      if (config.banned[i] == msg.author.id) {
+        banned = true;
+        break;
+      }
     }
     if (banned) return msg.channel.send('Sorry you have been banned from using this bot. If you think this is a mistake or want to apeal contact CactusKing101#2624. Depression and suicide is not a joke and if you feel you need help please call a suicide hotline.\nhttps://www.opencounseling.com/suicide-hotlines');
     try {

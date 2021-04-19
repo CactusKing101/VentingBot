@@ -24,7 +24,7 @@ client.on('message', async msg => {
         break;
       }
     }
-    if (banned) return msg.channel.send('Sorry you have been banned from using this bot. If you think this is a mistake or want to apeal contact CactusKing101#2624. Depression and suicide is not a joke and if you feel you need help please call a suicide hotline.\nhttps://www.opencounseling.com/suicide-hotlines');
+    if (banned) return msg.channel.send('Sorry you have been banned from using this bot. If you think this is a mistake or want to appeal contact CactusKing101#2624. Depression and suicide is not a joke and if you feel you need help please call a suicide hotline.\nhttps://www.opencounseling.com/suicide-hotlines');
     try {
       const webhooks = await ventCh.fetchWebhooks();
       const webhook = webhooks.first();

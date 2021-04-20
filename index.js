@@ -32,7 +32,7 @@ client.on('message', async msg => {
       if (webhook == null) return msg.channel.send('Error:\nNo webhooks found!');
       main.push([++id, msg.author.tag, msg.author.id]);
       var embed = new Discord.MessageEmbed().setDescription(msg.content).setColor('#9e9d9d').setFooter(`Id: ${id}`);
-      await webhook.send('[Venting]', {
+      await webhook.send(`[Venting] Id: ${id}`, {
         username: 'Anonymous Venter',
         avatarURL: guild.iconURL(),
         embeds: [embed],

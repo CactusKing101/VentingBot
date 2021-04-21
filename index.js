@@ -66,7 +66,7 @@ client.on('message', async msg => {
       const reaction = collected.first();
       
       if (reaction.emoji.name === '👍') {
-        vent(msg, '833730808686575626');
+        vent(msg, '834546271356321822');
       } else {
         vent(msg, '833730808686575626');
       }

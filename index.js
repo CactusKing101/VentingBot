@@ -38,7 +38,7 @@ client.on('message', async msg => {
       }
       await webhook.send(`[Venting] Id: ${id}`, {
         username: 'Anonymous Venter',
-        avatarURL: guild.iconURL(),
+        avatarURL: client.user.displayAvatarURL(),
         embeds: embeds,
       });
       msg.author.send('Your message has been sent to the venting channel. Your life is important. We all care very deeply about you. Please know we are all here for you.\n*Keep in mind you can always request to delete a message you sent by dming CactusKing101#2624*');

@@ -64,7 +64,7 @@ client.on('message', async msg => {
   msg.channel.send(new Discord.MessageEmbed().setDescription('Hey just a quick question! Does you vent contain any triggers? List of triggers: http://bit.ly/trigger-warnings-list').setColor('#9e9d9d'))
   msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
     .then(collected => {
-      console.log(collected.first().me)
+      console.log(collected.first().users.cache.first())
       if (collected.first().emoji.name == '👍') {
         vent(msg, '834546271356321822');
       } else if (collected.first().emoji.name == '👎') {

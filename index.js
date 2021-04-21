@@ -31,11 +31,15 @@ client.on('message', async msg => {
       
       if (webhook == null) return msg.channel.send('Error:\nNo webhooks found!');
       main.push([++id, msg.author.tag, msg.author.id]);
-      var embed = new Discord.MessageEmbed().setDescription(msg.content).setColor('#9e9d9d').setFooter(`Id: ${id}`);
+      var embeds = [];
+      embeds.push(new Discord.MessageEmbed().setDescription(msg.content).setColor('#9e9d9d').setFooter(`Id: ${id}`));
+      for(let i of msg.attachments) {
+        embeds.push(new Discord.MessageEmbed().setImage(i[1].url).setColor('#9e9d9d').setFooter(`Id: ${id}`));
+      }
       await webhook.send(`[Venting] Id: ${id}`, {
         username: 'Anonymous Venter',
         avatarURL: guild.iconURL(),
-        embeds: [embed],
+        embeds: embeds,
       });
       msg.author.send('Your message has been sent to the venting channel. Your life is important. We all care very deeply about you. Please know we are all here for you.\n*Keep in mind you can always request to delete a message you sent by dming CactusKing101#2624*');
       var tempData = {

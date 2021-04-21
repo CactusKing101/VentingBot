@@ -44,32 +44,35 @@ client.once('ready', () => {
 });
 
 client.on('message', async msg => {
-  
+
   if (msg.author.bot || msg.channel.type != 'dm') return;
   let banned = false;
   for (let i = 0; i < config.banned.length; ++i) {
-    
+
     if (config.banned[i] == msg.author.id) {
       banned = true;
       break;
     }
   }
-  
+
   if (banned) return msg.channel.send('Sorry you have been banned from using this bot. If you think this is a mistake or want to appeal contact CactusKing101#2624. Depression and suicide is not a joke and if you feel you need help please call a suicide hotline.\nhttps://www.opencounseling.com/suicide-hotlines');
-  msg.react('👍');
-  msg.react('👎');
+  msg.react('👍').then(() => msg.react('👎'));
   const filter = (reaction, user) => {
-    return reaction.emoji.name == '👍' || reaction.emoji.name == '👎' && user.id == msg.author.id;
+    return ['👍', '👎'].includes(reaction.emoji.name) && user.id == msg.author.id;
   };
-  msg.channel.send(new Discord.MessageEmbed().setDescription('Hey just a quick question! Does you vent contain any triggers? List of triggers: http://bit.ly/trigger-warnings-list').setColor('#9e9d9d'))
+  msg.channel.send(new Discord.MessageEmbed().setDescription('Hey just a quick question! Does you vent contain any triggers? List of triggers: http://bit.ly/trigger-warnings-list').setColor('#9e9d9d'));
   msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
     .then(collected => {
-      console.log(collected.first().users.cache.first())
-      if (collected.first().emoji.name == '👍') {
-        vent(msg, '834546271356321822');
-      } else if (collected.first().emoji.name == '👎') {
-        vent(msg, '833730808686575626');
+      const reaction = collected.first();
+
+      if (reaction.emoji.name === '👍') {
+        msg.reply('you reacted with a thumbs up.');
+      } else {
+        msg.reply('you reacted with a thumbs down.');
       }
+    })
+    .catch(collected => {
+      msg.reply('you reacted with neither a thumbs up, nor a thumbs down.');
     });
 });
 

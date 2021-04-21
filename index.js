@@ -25,7 +25,7 @@ async function vent(msg = Discord.Message, chId = String) {
       avatarURL: client.user.displayAvatarURL(),
       embeds: embeds,
     });
-    msg.author.send('Your message has been sent to the venting channel. Your life is important. We all care very deeply about you. Please know we are all here for you.\n*Keep in mind you can always request to delete a message you sent by dming CactusKing101#2624*');
+    reply(msg.channel.id, 'Your message has been sent to the venting channel. Your life is important. We all care very deeply about you. Please know we are all here for you.\n*Keep in mind you can always request to delete a message you sent by dming CactusKing101#2624*', '#9e9d9d');
     var tempData = {
       main: main,
       id: id
@@ -60,19 +60,19 @@ client.on('message', async msg => {
   const filter = (reaction, user) => {
     return ['👍', '👎'].includes(reaction.emoji.name) && user.id == msg.author.id;
   };
-  msg.channel.send(new Discord.MessageEmbed().setDescription('Hey just a quick question! Does you vent contain any triggers? List of triggers: http://bit.ly/trigger-warnings-list').setColor('#9e9d9d'));
+  msg.channel.send(new Discord.MessageEmbed().setDescription('Hey just a quick question! Does you vent contain any triggers?\nYes it does: 👍\nNo it doesn\'t: 👎\nList of triggers: http://bit.ly/trigger-warnings-list').setColor('#9e9d9d'));
   msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
     .then(collected => {
       const reaction = collected.first();
-
+      
       if (reaction.emoji.name === '👍') {
-        msg.reply('you reacted with a thumbs up.');
+        vent(msg, '833730808686575626');
       } else {
-        msg.reply('you reacted with a thumbs down.');
+        vent(msg, '833730808686575626');
       }
     })
     .catch(collected => {
-      msg.reply('you reacted with neither a thumbs up, nor a thumbs down.');
+      reply(msg.channel.id, 'You reacted with neither a thumbs up, nor a thumbs down. Your vent will not be sent.', '#9e9d9d');
     });
 });
 

@@ -7,6 +7,12 @@ const client = new Discord.Client();
 var main = data.main;
 var id = data.id;
 
+function reply(chId = String, description = String, color = String) {
+  const ch = client.channels.cache.get(chId);
+  var embed = new Discord.MessageEmbed().setDescription(description).setColor(color);
+  ch.send(embed);
+}
+
 async function vent(msg = Discord.Message, chId = String) {
   const ventCh = client.channels.cache.get(chId);
   try {

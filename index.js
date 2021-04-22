@@ -13,7 +13,7 @@ function reply(chId = String, description = String, color = String) {
   ch.send(embed);
 }
 
-async function vent(msg = Discord.Message, chId = String) {
+async function vent(msg = Discord.Message, chId = String, chType = String) {
   const ventCh = client.channels.cache.get(chId);
   try {
     const webhooks = await ventCh.fetchWebhooks();
@@ -31,7 +31,7 @@ async function vent(msg = Discord.Message, chId = String) {
       avatarURL: client.user.displayAvatarURL(),
       embeds: embeds,
     });
-    reply(msg.channel.id, 'Your message has been sent to the venting channel. Your life is important. We all care very deeply about you. Please know we are all here for you.\n*Keep in mind you can always request to delete a message you sent by dming CactusKing101#2624*', '#9e9d9d');
+    reply(msg.channel.id, `Your message has been sent to the ${chType}venting channel. Your life is important. We all care very deeply about you. Please know we are all here for you.\n*Keep in mind you can always request to delete a message you sent by dming CactusKing101#2624*`, '#9e9d9d');
     var tempData = {
       main: main,
       id: id
@@ -61,20 +61,20 @@ client.on('message', async msg => {
     }
   }
 
-  if (banned) return msg.channel.send('Sorry you have been banned from using this bot. If you think this is a mistake or want to appeal contact CactusKing101#2624. Depression and suicide is not a joke and if you feel you need help please call a suicide hotline.\nhttps://www.opencounseling.com/suicide-hotlines');
+  if (banned) return msg.channel.send('Sorry you have been **banned** from using this bot. If you think this is a mistake or want to appeal, contact CactusKing101#2624. Depression and suicide is not a joke and if you feel you need help please call a suicide hotline.\nhttps://www.opencounseling.com/suicide-hotlines');
   msg.react('👍').then(() => msg.react('👎'));
   const filter = (reaction, user) => {
     return ['👍', '👎'].includes(reaction.emoji.name) && user.id == msg.author.id;
   };
-  msg.channel.send(new Discord.MessageEmbed().setDescription('Hey just a quick question! Does you vent contain any triggers?\nYes it does: 👍\nNo it doesn\'t: 👎\nList of triggers: http://bit.ly/trigger-warnings-list').setColor('#9e9d9d'));
+  msg.channel.send(new Discord.MessageEmbed().setDescription('Hey just a quick question! Does you vent contain **any** triggers listed?\nYes it does: 👍\nNo it doesn\'t: 👎\nList of triggers: http://bit.ly/trigger-warnings-list').setColor('#9e9d9d'));
   msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
     .then(collected => {
       const reaction = collected.first();
       
       if (reaction.emoji.name === '👍') {
-        vent(msg, '834546271356321822');
+        vent(msg, '834546271356321822', 'trigger warning ');
       } else {
-        vent(msg, '833730808686575626');
+        vent(msg, '833730808686575626', '');
       }
     })
     .catch(collected => {

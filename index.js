@@ -54,12 +54,14 @@ client.on('message', async msg => {
   if (msg.author.bot) return;
 
   if (msg.channel.id == '833730808686575626' || msg.channel.id == '834546271356321822') {
-    if (msg.reference != null && msg.mentions.members.first().id == client.user.id) {
+    if (msg.reference != null) {
       client.channels.cache.get(msg.reference.channelID).messages.fetch(msg.reference.messageID)
         .then(message => {
-          const id = Number(message.content.split(' ')[2]);
-          const author = client.users.cache.get(main[id - 1][2]);
-          author.send(`This is an automated message to alert you someone replied to your vent with the id ${id}\n\n${msg.content}\n\n**This has no way to be tracked back to you unless you request your vent to be deleted or it is investigated.**`)
+          if (message.author.id == client.user.id) {
+            const id = Number(message.content.split(' ')[2]);
+            const author = client.users.cache.get(main[id - 1][2]);
+            author.send(`This is an automated message to alert you someone replied to your vent with the id ${id}\n\n${msg.content}\n\n**This has no way to be tracked back to you unless you request your vent to be deleted or it is investigated.**`)  
+          }
         });
     }
   }

@@ -54,7 +54,7 @@ client.on('message', async msg => {
   if (msg.author.bot) return;
 
   if (msg.channel.id == '833730808686575626' || msg.channel.id == '834546271356321822') {
-    if (msg.reference.messageID != null && msg.mentions.users.first().id == client.user.id) {
+    if (msg.reference != null && msg.mentions.members.first().id == client.user.id) {
       client.channels.cache.get(msg.reference.channelID).messages.fetch(msg.reference.messageID)
         .then(message => {
           const id = Number(message.content.split(' ')[2]);

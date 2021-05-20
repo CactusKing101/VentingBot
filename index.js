@@ -86,7 +86,7 @@ client.on('message', async msg => {
   const filter = (reaction, user) => {
     return ['👍', '👎'].includes(reaction.emoji.name) && user.id == msg.author.id;
   };
-  msg.channel.send(new Discord.MessageEmbed().setDescription('Hey just a quick question! Does your vent contain **any** triggers listed?\nYes it does: 👍\nNo it doesn\'t: 👎\nList of triggers: http://bit.ly/trigger-warnings-list').setColor('#9e9d9d'));
+  msg.channel.send(new Discord.MessageEmbed().setDescription('Hey just a quick question! Does your vent contain **any** triggers listed?\nYes it does: 👍\nNo it doesn\'t: 👎\nList of triggers: http://bit.ly/trigger-warnings-list').setColor('#4995a3'));
   msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
     .then(collected => {
       const reaction = collected.first();

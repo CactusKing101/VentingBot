@@ -7,6 +7,12 @@ const client = new Discord.Client();
 var main = data.main;
 var id = data.id;
 
+function dm(targetId = String, description = String, color = String) {
+  const ch = client.users.cache.get(targetId);
+  var embed = new Discord.MessageEmbed().setDescription(description).setColor(color);
+  ch.send(embed);
+}
+
 function reply(chId = String, description = String, color = String) {
   const ch = client.channels.cache.get(chId);
   var embed = new Discord.MessageEmbed().setDescription(description).setColor(color);
@@ -22,16 +28,16 @@ async function vent(msg = Discord.Message, chId = String, chType = String) {
     if (webhook == null) return msg.channel.send('Error:\nNo webhooks found!');
     main.push([++id, msg.author.tag, msg.author.id]);
     var embeds = [];
-    embeds.push(new Discord.MessageEmbed().setDescription(msg.content).setColor('#9e9d9d').setFooter(`Id: ${id}`));
+    embeds.push(new Discord.MessageEmbed().setDescription(msg.content).setColor('#4995a3').setFooter(`Id: ${id}`));
     for (let i of msg.attachments) {
-      embeds.push(new Discord.MessageEmbed().setImage(i[1].url).setColor('#9e9d9d').setFooter(`Id: ${id}`));
+      embeds.push(new Discord.MessageEmbed().setImage(i[1].url).setColor('#4995a3').setFooter(`Id: ${id}`));
     }
     await webhook.send(`[Venting] Id: ${id}`, {
       username: 'Anonymous Venter',
       avatarURL: client.user.displayAvatarURL(),
       embeds: embeds,
     });
-    reply(msg.channel.id, `Your message has been sent to the ${chType}venting channel. Your life is important. We all care very deeply about you. Please know we are all here for you.\n*Keep in mind you can always request to delete a message you sent by dming CactusKing101#2624*`, '#9e9d9d');
+    reply(msg.channel.id, `Your message has been sent to the ${chType}venting channel. Your life is important. We all care very deeply about you. Please know we are all here for you.\n*Keep in mind you can always request to delete a message you sent by dming CactusKing101#2624*`, '#4995a3');
     var tempData = {
       main: main,
       id: id
@@ -59,8 +65,7 @@ client.on('message', async msg => {
         .then(message => {
           if (message.webhookID != null) {
             const id = Number(message.content.split(' ')[2]);
-            const author = client.users.cache.get(main[id - 1][2]);
-            author.send(`This is an automated message to alert you someone replied to your vent with the id ${id}\n\n${msg.content}\n\n**This has no way to be tracked back to you unless you request your vent to be deleted or it is investigated.**`)  
+            dm(main[id - 1][2], `This is an automated message to alert you someone replied to your vent with the id ${id}\n\nAuthor: ${msg.author.tag}\n${msg.content}\n\n**This has no way to be tracked back to you unless you request your vent to be deleted or it is investigated.**`, '#9e9d9d')  
           }
         });
     }
@@ -93,7 +98,7 @@ client.on('message', async msg => {
       }
     })
     .catch(collected => {
-      reply(msg.channel.id, 'You reacted with neither a thumbs up, nor a thumbs down. Your vent will not be sent.', '#9e9d9d');
+      reply(msg.channel.id, 'You reacted with neither a thumbs up, nor a thumbs down. Your vent will not be sent.', '#4995a3');
     });
 });
 

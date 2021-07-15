@@ -67,6 +67,7 @@ async function deleteVent(tw, iId, iToken, id) {
     } else {
       var yes = true;
       const messages = await client.channels.cache.get('833730808686575626').messages.fetch({ limit: 20 });
+      console.log(messages);
       for(const msg of messages) {
         if (msg.webhookID != null) console.log(msg);
         if (msg.webhookID != null && msg.content.split(' ')[2] == id) {

@@ -60,7 +60,13 @@ function deleteVent(tw, iId, iToken, id) {
           var ventId = msg.content.split(' ');
           if (msg.webhookID != null && ventId[2] == id) {
             client.channels.cache.get('834546271356321822').messages.fetch(msg.id).then((message) => {
-              reply(iId, iToken, `Deleted vent id ` + id);
+              client.api.interactions(iId, iToken).callback.post({data: {
+                type: 4,
+                data: {
+                  content: `Deleted vent id ${id}`,
+                  flags: 1 << 6,
+                },
+              }});
               message.delete();
               !yes;
             });
@@ -75,7 +81,13 @@ function deleteVent(tw, iId, iToken, id) {
           var ventId = msg.content.split(' ');
           if (msg.webhookID != null && ventId[2] == id) {
             client.channels.cache.get('833730808686575626').messages.fetch(msg.id).then((message) => {
-              reply(iId, iToken, `Deleted vent id ` + id);
+              client.api.interactions(iId, iToken).callback.post({data: {
+                type: 4,
+                data: {
+                  content: `Deleted vent id ${id}`,
+                  flags: 1 << 6,
+                },
+              }});
               message.delete();
               !yes;
             });

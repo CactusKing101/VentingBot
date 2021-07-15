@@ -13,25 +13,26 @@ function dm(targetId = String, description = String, color = String) {
   ch.send(embed);
 }
 
-function reply(chId = String, description = String, color = String) {
-  const ch = client.channels.cache.get(chId);
-  var embed = new Discord.MessageEmbed().setDescription(description).setColor(color);
-  ch.send(embed);
+function reply(id, token, cont) {
+  client.api.interactions(id, token).callback.post({data: {
+    type: 4,
+    data: {
+      content: cont,
+      flags: 1 << 6,
+    }
+  }});
 }
 
-async function vent(msg = Discord.Message, chId = String, chType = String) {
+async function vent(member, chId, chType, iId, iToken, vent) {
   const ventCh = client.channels.cache.get(chId);
   try {
     const webhooks = await ventCh.fetchWebhooks();
     const webhook = webhooks.first();
 
-    if (webhook == null) return msg.channel.send('Error:\nNo webhooks found!');
-    main.push([++id, msg.author.tag, msg.author.id]);
+    if (webhook == null) return reply(iId, iToken, 'Error:\nNo webhooks found!');
+    main.push([++id, `${member.user.username}#${member.user.discriminator}`, member.user.id]);
     var embeds = [];
-    embeds.push(new Discord.MessageEmbed().setDescription(msg.content).setColor('#4995a3').setFooter(`Id: ${id}`));
-    for (let i of msg.attachments) {
-      embeds.push(new Discord.MessageEmbed().setImage(i[1].url).setColor('#4995a3').setFooter(`Id: ${id}`));
-    }
+    embeds.push(new Discord.MessageEmbed().setDescription(vent).setColor('#4995a3').setFooter(`Id: ${id}`));
     await webhook.send(`[Venting] Id: ${id}`, {
       username: 'Anonymous Venter',
       avatarURL: client.user.displayAvatarURL(),
@@ -53,10 +54,46 @@ async function vent(msg = Discord.Message, chId = String, chType = String) {
 client.once('ready', () => {
   client.user.setActivity('dm to vent');
   console.log(`Logged in as ${client.user.tag}`);
+  client.api.applications(client.user.id).guilds('816168836298047528').commands.post({data: {
+    name: 'vent',
+    description: 'Sends an anonymous vent the venting channel',
+    options: [
+      {
+        name: 'tw',
+        type: 5,
+        description: 'Whether or not the vent contains triggers',
+        required: true,
+      },
+      {
+        name: 'vent',
+        type: 3,
+        description: 'The vent that will be sent into the channel',
+        required: true,
+      },
+    ],
+  }});
 });
 
-client.on('message', async msg => {
+client.ws.on('INTERACTION_CREATE', async interaction => {
+  if (interaction.data.name == 'vent') {
+    let banned = false;
+    for (let i = 0; i < config.banned.length; ++i) {
+      if (config.banned[i] == interaction.member.user.id) {
+        banned = true;
+        break;
+      }
+    }
+  
+    if (banned) return reply(interaction.id, interaction.token, 'Sorry you have been **banned** from using this bot. If you think this is a mistake or want to appeal, contact CactusKing101#2624. Depression and suicide is not a joke and if you feel you need help please call a suicide hotline.\nhttps://www.opencounseling.com/suicide-hotlines');
+    if (interaction.data.options[0]) {
+      vent(interaction.member, '834546271356321822', 'trigger warning ', interaction.id, interaction.token, interaction.options[1].value);
+    } else {
+      vent(interaction.member, '833730808686575626', '', interaction.id, interaction.token, interaction.options[1].value);
+    }
+  }
+});
 
+client.on('message', (msg) => {
   if (msg.author.bot || msg.webhookID) return;
 
   if (msg.channel.id == '833730808686575626' || msg.channel.id == '834546271356321822') {
@@ -70,36 +107,6 @@ client.on('message', async msg => {
         });
     }
   }
-
-  if (msg.channel.type != 'dm') return;
-  let banned = false;
-  for (let i = 0; i < config.banned.length; ++i) {
-
-    if (config.banned[i] == msg.author.id) {
-      banned = true;
-      break;
-    }
-  }
-
-  if (banned) return msg.channel.send('Sorry you have been **banned** from using this bot. If you think this is a mistake or want to appeal, contact CactusKing101#2624. Depression and suicide is not a joke and if you feel you need help please call a suicide hotline.\nhttps://www.opencounseling.com/suicide-hotlines');
-  msg.react('👍').then(() => msg.react('👎'));
-  const filter = (reaction, user) => {
-    return ['👍', '👎'].includes(reaction.emoji.name) && user.id == msg.author.id;
-  };
-  msg.channel.send(new Discord.MessageEmbed().setDescription('Hey just a quick question! Does your vent contain **any** triggers listed?\nYes it does: 👍\nNo it doesn\'t: 👎\nList of triggers: http://bit.ly/trigger-warnings-list').setColor('#4995a3'));
-  msg.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
-    .then(collected => {
-      const reaction = collected.first();
-      
-      if (reaction.emoji.name === '👍') {
-        vent(msg, '834546271356321822', 'trigger warning ');
-      } else {
-        vent(msg, '833730808686575626', '');
-      }
-    })
-    .catch(collected => {
-      reply(msg.channel.id, 'You reacted with neither a thumbs up, nor a thumbs down. Your vent will not be sent.', '#4995a3');
-    });
 });
 
 client.login(token.main);

@@ -55,23 +55,25 @@ async function deleteVent(tw, iId, iToken, id) {
   try {
     if (tw) {
       var yes = true;
-      await client.channels.cache.get('834546271356321822').messages.fetch().forEach(msg => {
+      const messages = await client.channels.cache.get('834546271356321822').messages.fetch()
+      for(let msg of messages) {
         if (msg.webhookID != null && msg.content.split(' ')[2] == id) {
           msg.suppressEmbeds(true);
           reply(iId, iToken, `Deleted vent id ${id}`);
           !yes;
         }
-      });
+      }
       if (yes) reply(iId, iToken, `Could not locate vent\nIf you believe this is an actual error contact CactusKing101#2624`);
     } else {
       var yes = true;
-      await client.channels.cache.get('833730808686575626').messages.fetch().forEach(msg => {
+      const messages = await client.channels.cache.get('833730808686575626').messages.fetch()
+      for(let msg of messages) {
         if (msg.webhookID != null && msg.content.split(' ')[2] == id) {
           msg.suppressEmbeds(true);
           reply(iId, iToken, `Deleted vent id ${id}`);
           !yes;
         }
-      });
+      }
       if (yes) reply(iId, iToken, `Could not locate vent\nIf you believe this is an actual error contact CactusKing101#2624`);
     }
   } catch (err) {

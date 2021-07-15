@@ -38,7 +38,7 @@ async function vent(member, chId, chType, iId, iToken, vent) {
       avatarURL: client.user.displayAvatarURL(),
       embeds: embeds,
     });
-    reply(iId, iToken, `Your message has been sent to the ${chType}venting channel. Your life is important. We all care very deeply about you. Please know we are all here for you.\n*Keep in mind you can always request to delete a message you sent by dming CactusKing101#2624*`, '#4995a3');
+    reply(iId, iToken, `Your message has been sent to the ${chType}venting channel. Your life is important. We all care very deeply about you. Please know we are all here for you.\n*Keep in mind you can always delete a message you sent by doing /delete*`, '#4995a3');
     var tempData = {
       main: main,
       id: id

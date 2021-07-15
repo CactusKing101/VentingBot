@@ -66,7 +66,7 @@ async function deleteVent(tw, iId, iToken, id) {
       if (yes) reply(iId, iToken, `Could not locate vent\nIf you believe this is an actual error contact CactusKing101#2624`);
     } else {
       var yes = true;
-      const messages = await client.channels.cache.get('833730808686575626').messages.fetch();
+      const messages = await client.channels.cache.get('833730808686575626').messages.fetch({ limit: 20 });
       for(const msg of messages) {
         if (msg.webhookID != null) console.log(msg);
         if (msg.webhookID != null && msg.content.split(' ')[2] == id) {

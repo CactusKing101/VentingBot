@@ -72,7 +72,7 @@ async function deleteVent(tw, iId, iToken, id) {
         var ventId = msg.content.split(' ');
         if (msg.author.username == 'Anonymous Venter' && msg.author.discriminator == '0000' && ventId[2] == id) {
           console.log(msg);
-          msg.suppressEmbeds(true);
+          client.channels.cache.get('833730808686575626').messages.fetch(msg.id).suppressEmbeds(true);
           reply(iId, iToken, `Deleted vent id ${id}`);
           !yes;
         } 

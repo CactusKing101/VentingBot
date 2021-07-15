@@ -38,7 +38,7 @@ async function vent(member, chId, chType, iId, iToken, vent) {
       avatarURL: client.user.displayAvatarURL(),
       embeds: embeds,
     });
-    reply(msg.channel.id, `Your message has been sent to the ${chType}venting channel. Your life is important. We all care very deeply about you. Please know we are all here for you.\n*Keep in mind you can always request to delete a message you sent by dming CactusKing101#2624*`, '#4995a3');
+    reply(iId, iToken, `Your message has been sent to the ${chType}venting channel. Your life is important. We all care very deeply about you. Please know we are all here for you.\n*Keep in mind you can always request to delete a message you sent by dming CactusKing101#2624*`, '#4995a3');
     var tempData = {
       main: main,
       id: id
@@ -85,7 +85,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
     }
   
     if (banned) return reply(interaction.id, interaction.token, 'Sorry you have been **banned** from using this bot. If you think this is a mistake or want to appeal, contact CactusKing101#2624. Depression and suicide is not a joke and if you feel you need help please call a suicide hotline.\nhttps://www.opencounseling.com/suicide-hotlines');
-    if (interaction.data.options[0]) {
+    if (interaction.data.options[0].value) {
       vent(interaction.member, '834546271356321822', 'trigger warning ', interaction.id, interaction.token, interaction.data.options[1].value);
     } else {
       vent(interaction.member, '833730808686575626', '', interaction.id, interaction.token, interaction.data.options[1].value);

@@ -60,8 +60,8 @@ function deleteVent(tw, iId, iToken, id) {
           var ventId = msg.content.split(' ');
           if (msg.webhookID != null && ventId[2] == id) {
             client.channels.cache.get('834546271356321822').messages.fetch(msg.id).then((msg) => {
-              msg.suppressEmbeds(true);
-              reply(iId, iToken, `Deleted vent id ${id}`);
+              reply(iId, iToken, `Deleted vent id ` + id);
+              message.delete();
               !yes;
             });
           } 
@@ -75,8 +75,8 @@ function deleteVent(tw, iId, iToken, id) {
           var ventId = msg.content.split(' ');
           if (msg.webhookID != null && ventId[2] == id) {
             client.channels.cache.get('833730808686575626').messages.fetch(msg.id).then((message) => {
-              message.delete();
               reply(iId, iToken, `Deleted vent id ` + id);
+              message.delete();
               !yes;
             });
           } 

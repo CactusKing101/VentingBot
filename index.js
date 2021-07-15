@@ -136,7 +136,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
     } else {
       vent(interaction.member, '833730808686575626', '', interaction.id, interaction.token, interaction.data.options[1].value);
     }
-  } else if (interaction.data.value == 'delete') {
+  } else if (interaction.data.name == 'delete') {
     if (data.main[interaction.data.options[0].value - 1][2] == interaction.member.user.id) {
       deleteVent(interaction.data.options[1].value, interaction.id, interaction.token, interaction.data.options[0].value);
     } else {

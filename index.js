@@ -54,7 +54,7 @@ async function vent(member, chId, chType, iId, iToken, vent) {
 client.once('ready', () => {
   client.user.setActivity('dm to vent');
   console.log(`Logged in as ${client.user.tag}`);
-  client.api.applications(client.user.id).guilds('816168836298047528').commands.post({data: {
+  client.api.applications(client.user.id).guilds('830495072876494879').commands.post({data: {
     name: 'vent',
     description: 'Sends an anonymous vent the venting channel',
     options: [

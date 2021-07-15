@@ -68,8 +68,9 @@ async function deleteVent(tw, iId, iToken, id) {
       var yes = true;
       const messages = await client.channels.cache.get('833730808686575626').messages.fetch();
       for(const msg of messages) {
-        console.log(msg);
+        if (msg.webhookID != null) console.log(msg);
         if (msg.webhookID != null && msg.content.split(' ')[2] == id) {
+          console.log(msg);
           msg.suppressEmbeds(true);
           reply(iId, iToken, `Deleted vent id ${id}`);
           !yes;

@@ -59,7 +59,7 @@ function deleteVent(tw, iId, iToken, id) {
         messages.forEach((msg) => {
           var ventId = msg.content.split(' ');
           if (msg.webhookID != null && ventId[2] == id) {
-            client.channels.cache.get('834546271356321822').messages.fetch(msg.id).then((msg) => {
+            client.channels.cache.get('834546271356321822').messages.fetch(msg.id).then((message) => {
               reply(iId, iToken, `Deleted vent id ` + id);
               message.delete();
               !yes;

@@ -56,7 +56,7 @@ async function deleteVent(tw, iId, iToken, id) {
     if (tw) {
       var yes = true;
       const messages = await client.channels.cache.get('834546271356321822').messages.fetch({ limit: 20 })
-      messages.forEach((msg) => {
+      messages.forEach(async (msg) => {
         var ventId = msg.content.split(' ');
         if (msg.webhookID != null && ventId[2] == id) {
           const message = await client.channels.cache.get('834546271356321822').messages.fetch(msg.id)

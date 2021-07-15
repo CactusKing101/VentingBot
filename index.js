@@ -58,41 +58,25 @@ async function deleteVent(tw, iId, iToken, id) {
       const messages = await client.channels.cache.get('834546271356321822').messages.fetch({ limit: 20 })
       messages.forEach(async (msg) => {
         var ventId = msg.content.split(' ');
-        if (msg.webhookID != null && ventId[2] == id) {
+        if (msg.webhookID != null && ventId[2] == id && yes) {
           const message = await client.channels.cache.get('834546271356321822').messages.fetch(msg.id)
-          client.api.interactions(iId, iToken).callback.post({data: {
-            type: 4,
-            data: {
-              content: `Deleted vent id ${id}`,
-              flags: 1 << 6,
-            },
-          }});
           message.delete();
           !yes;
         } 
       });
-      if (yes) reply(iId, iToken, `Could not locate vent\nIf you believe this is an actual error contact CactusKing101#2624`);
+      reply(iId, iToken, `The vent was deleted\nIf you believe this is an actually an error contact CactusKing101#2624`);
     } else {
       var yes = true;
-      client.channels.cache.get('833730808686575626').messages.fetch({ limit: 20 }).then((messages) => {
-        messages.forEach((msg) => {
-          var ventId = msg.content.split(' ');
-          if (msg.webhookID != null && ventId[2] == id) {
-            client.channels.cache.get('833730808686575626').messages.fetch(msg.id).then((message) => {
-              client.api.interactions(iId, iToken).callback.post({data: {
-                type: 4,
-                data: {
-                  content: `Deleted vent id ${id}`,
-                  flags: 1 << 6,
-                },
-              }});
-              message.delete();
-              !yes;
-            });
-          } 
-        });
+      const messages = await client.channels.cache.get('833730808686575626').messages.fetch({ limit: 20 })
+      messages.forEach(async (msg) => {
+        var ventId = msg.content.split(' ');
+        if (msg.webhookID != null && ventId[2] == id && yes) {
+          const message = await client.channels.cache.get('833730808686575626').messages.fetch(msg.id)
+          message.delete();
+          !yes;
+        } 
       });
-      if (yes) reply(iId, iToken, `Could not locate vent\nIf you believe this is an actual error contact CactusKing101#2624`);
+      reply(iId, iToken, `The vent was deleted\nIf you believe this is an actually an error contact CactusKing101#2624`);
     }
   } catch (err) {
     console.warn(err);

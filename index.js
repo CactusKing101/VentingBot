@@ -78,7 +78,7 @@ async function deleteVent(tw, iId, iToken, id) {
 client.once('ready', () => {
   client.user.setActivity('dm to vent');
   console.log(`Logged in as ${client.user.tag}`);
-  client.api.applications(client.user.id).guilds('816168836298047528').commands.post({data: {
+  client.api.applications(client.user.id).guilds('830495072876494879').commands.post({data: {
     name: 'vent',
     description: 'Sends an anonymous vent the venting channel',
     options: [
@@ -96,7 +96,7 @@ client.once('ready', () => {
       },
     ],
   }});
-  client.api.applications(client.user.id).guilds('816168836298047528').commands.post({data: {
+  client.api.applications(client.user.id).guilds('830495072876494879').commands.post({data: {
     name: 'delete',
     description: 'Delete a vent you have sent',
     options: [

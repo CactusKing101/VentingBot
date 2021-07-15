@@ -67,7 +67,7 @@ async function deleteVent(tw, iId, iToken, id) {
     } else {
       var yes = true;
       const messages = await client.channels.cache.get('833730808686575626').messages.fetch({ limit: 20 });
-      messages.forEach((msg, id) => {
+      messages.forEach((msg) => {
         console.log(id);
         var ventId = msg.content.split(' ');
         if (msg.author.username == 'Anonymous Venter' && msg.author.discriminator == '0000' && ventId[2] == id) {

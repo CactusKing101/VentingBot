@@ -70,7 +70,7 @@ async function deleteVent(tw, iId, iToken, id) {
       messages.forEach((msg, id) => {
         console.log(msg);
         var ventId = msg.content.split(' ');
-        if (msg.webhookID != null && ventId[2] == id) {
+        if (msg.author.username == 'Anonymous Venter' && msg.author.discriminator == '0000' && ventId[2] == id) {
           console.log(msg);
           msg.suppressEmbeds(true);
           reply(iId, iToken, `Deleted vent id ${id}`);

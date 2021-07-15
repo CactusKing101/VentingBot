@@ -51,10 +51,34 @@ async function vent(member, chId, chType, iId, iToken, vent) {
   }
 }
 
+async function deleteVent(tw, iId, iToken, id) {
+  if (tw) {
+    var yes = true;
+    await client.channels.cache.get('834546271356321822').messages.fetch().forEach(msg => {
+      if (msg.webhookID != null && msg.content.split(' ')[2] == id) {
+        msg.suppressEmbeds(true);
+        reply(iId, iToken, `Deleted vent id ${id}`);
+        !yes;
+      }
+    });
+    if (yes) reply(iId, iToken, `Could not locate vent\nIf you believe this is an actual error contact CactusKing101#2624`);
+  } else {
+    var yes = true;
+    await client.channels.cache.get('833730808686575626').messages.fetch().forEach(msg => {
+      if (msg.webhookID != null && msg.content.split(' ')[2] == id) {
+        msg.suppressEmbeds(true);
+        reply(iId, iToken, `Deleted vent id ${id}`);
+        !yes;
+      }
+    });
+    if (yes) reply(iId, iToken, `Could not locate vent\nIf you believe this is an actual error contact CactusKing101#2624`);
+  }
+}
+
 client.once('ready', () => {
   client.user.setActivity('dm to vent');
   console.log(`Logged in as ${client.user.tag}`);
-  client.api.applications(client.user.id).guilds('830495072876494879').commands.post({data: {
+  client.api.applications(client.user.id).guilds('816168836298047528').commands.post({data: {
     name: 'vent',
     description: 'Sends an anonymous vent the venting channel',
     options: [
@@ -68,6 +92,24 @@ client.once('ready', () => {
         name: 'vent',
         type: 3,
         description: 'The vent that will be sent into the channel',
+        required: true,
+      },
+    ],
+  }});
+  client.api.applications(client.user.id).guilds('816168836298047528').commands.post({data: {
+    name: 'delete',
+    description: 'Delete a vent you have sent',
+    options: [
+      {
+        name: 'id',
+        type: 4,
+        description: 'Id to the vent you have sent',
+        required: true,
+      },
+      {
+        name: 'tw',
+        type: 5,
+        description: 'Was this vent in the trigger warning channel?',
         required: true,
       },
     ],
@@ -89,6 +131,12 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
       vent(interaction.member, '834546271356321822', 'trigger warning ', interaction.id, interaction.token, interaction.data.options[1].value);
     } else {
       vent(interaction.member, '833730808686575626', '', interaction.id, interaction.token, interaction.data.options[1].value);
+    }
+  } else if (interaction.data.value == 'delete') {
+    if (data.main[interaction.data.options[0].value - 1][2] == interaction.member.user.id) {
+      deleteVent(interaction.data.options[1].value, interaction.id, interaction.token, interaction.data.options[0].value);
+    } else {
+      reply(interaction.id, interaction.token, `This isn't your vent according to the database\nContact CactusKing101#2624 if you believe this an actual error`);
     }
   }
 });

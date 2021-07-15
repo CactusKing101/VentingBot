@@ -66,8 +66,6 @@ async function deleteVent(tw, iId, iToken, id) {
       if (yes) reply(iId, iToken, `Could not locate vent\nIf you believe this is an actual error contact CactusKing101#2624`);
     } else {
       var yes = true;
-      const thing = new Discord.Collection();
-      thing.forEach()
       const messages = await client.channels.cache.get('833730808686575626').messages.fetch({ limit: 20 });
       messages.forEach((id, msg) => {
         if (msg.webhookID != null) console.log(msg);

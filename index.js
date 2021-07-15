@@ -51,31 +51,36 @@ async function vent(member, chId, chType, iId, iToken, vent) {
   }
 }
 
-async function deleteVent(tw, iId, iToken, id) {
+function deleteVent(tw, iId, iToken, id) {
   try {
     if (tw) {
       var yes = true;
-      const messages = await client.channels.cache.get('834546271356321822').messages.fetch();
-      for(let msg of messages) {
-        if (msg.webhookID != null && msg.content.split(' ')[2] == id) {
-          msg.suppressEmbeds(true);
-          reply(iId, iToken, `Deleted vent id ${id}`);
-          !yes;
-        }
-      }
+      client.channels.cache.get('834546271356321822').messages.fetch({ limit: 20 }).then((messages) => {
+        messages.forEach((msg) => {
+          var ventId = msg.content.split(' ');
+          if (msg.webhookID != null && ventId[2] == id) {
+            client.channels.cache.get('834546271356321822').messages.fetch(msg.id).then((msg) => {
+              msg.suppressEmbeds(true);
+              reply(iId, iToken, `Deleted vent id ${id}`);
+              !yes;
+            });
+          } 
+        });
+      });
       if (yes) reply(iId, iToken, `Could not locate vent\nIf you believe this is an actual error contact CactusKing101#2624`);
     } else {
       var yes = true;
-      const messages = await client.channels.cache.get('833730808686575626').messages.fetch({ limit: 20 });
-      messages.forEach((msg) => {
-        console.log(id);
-        var ventId = msg.content.split(' ');
-        if (msg.author.username == 'Anonymous Venter' && msg.author.discriminator == '0000' && ventId[2] == id) {
-          console.log(msg);
-          client.channels.cache.get('833730808686575626').messages.fetch(msg.id).suppressEmbeds(true);
-          reply(iId, iToken, `Deleted vent id ${id}`);
-          !yes;
-        } 
+      client.channels.cache.get('833730808686575626').messages.fetch({ limit: 20 }).then((messages) => {
+        messages.forEach((msg) => {
+          var ventId = msg.content.split(' ');
+          if (msg.webhookID != null && ventId[2] == id) {
+            client.channels.cache.get('833730808686575626').messages.fetch(msg.id).then((msg) => {
+              msg.suppressEmbeds(true);
+              reply(iId, iToken, `Deleted vent id ${id}`);
+              !yes;
+            });
+          } 
+        });
       });
       if (yes) reply(iId, iToken, `Could not locate vent\nIf you believe this is an actual error contact CactusKing101#2624`);
     }

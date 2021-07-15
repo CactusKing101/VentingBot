@@ -51,15 +51,15 @@ async function vent(member, chId, chType, iId, iToken, vent) {
   }
 }
 
-function deleteVent(tw, iId, iToken, id) {
+async function deleteVent(tw, iId, iToken, id) {
   try {
     if (tw) {
       var yes = true;
-      const messages = client.channels.cache.get('834546271356321822').messages.fetch({ limit: 20 })
+      const messages = await client.channels.cache.get('834546271356321822').messages.fetch({ limit: 20 })
       messages.forEach((msg) => {
         var ventId = msg.content.split(' ');
         if (msg.webhookID != null && ventId[2] == id) {
-          const message = client.channels.cache.get('834546271356321822').messages.fetch(msg.id)
+          const message = await client.channels.cache.get('834546271356321822').messages.fetch(msg.id)
           client.api.interactions(iId, iToken).callback.post({data: {
             type: 4,
             data: {

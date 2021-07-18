@@ -55,26 +55,34 @@ async function deleteVent(tw, iId, iToken, id) {
   try {
     if (tw) {
       var yes = true;
-      const messages = await client.channels.cache.get('834546271356321822').messages.fetch({ limit: 20 })
+      const webhooks = await ventCh.fetchWebhooks();
+      const webhook = webhooks.first();
+  
+      if (webhook == null) return reply(iId, iToken, 'Error:\nNo webhooks found!');
+      const messages = webhook.client.channels.cache.get('834546271356321822').messages.fetch({ limit: 20 });
       messages.forEach(async (msg) => {
         var ventId = msg.content.split(' ');
         if (msg.webhookID != null && ventId[2] == id && yes) {
-          const message = await client.channels.cache.get('834546271356321822').messages.fetch(msg.id)
-          message.delete();
+          const message = await webhook.client.channels.cache.get('834546271356321822').messages.fetch(msg.id);
+          message.suppressEmbeds(true);
           !yes;
-        } 
+        }
       });
       reply(iId, iToken, `The vent was deleted\nIf you believe this is an actually an error contact CactusKing101#2624`);
     } else {
       var yes = true;
-      const messages = await client.channels.cache.get('833730808686575626').messages.fetch({ limit: 20 })
+      const webhooks = await ventCh.fetchWebhooks();
+      const webhook = webhooks.first();
+  
+      if (webhook == null) return reply(iId, iToken, 'Error:\nNo webhooks found!');
+      const messages = webhook.client.channels.cache.get('833730808686575626').messages.fetch({ limit: 20 });
       messages.forEach(async (msg) => {
         var ventId = msg.content.split(' ');
         if (msg.webhookID != null && ventId[2] == id && yes) {
-          const message = await client.channels.cache.get('833730808686575626').messages.fetch(msg.id)
-          message.delete();
+          const message = await webhook.client.channels.cache.get('833730808686575626').messages.fetch(msg.id);
+          message.suppressEmbeds(true);
           !yes;
-        } 
+        }
       });
       reply(iId, iToken, `The vent was deleted\nIf you believe this is an actually an error contact CactusKing101#2624`);
     }

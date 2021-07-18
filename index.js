@@ -59,7 +59,7 @@ async function deleteVent(tw, iId, iToken, id) {
       const webhook = webhooks.first();
   
       if (webhook == null) return reply(iId, iToken, 'Error:\nNo webhooks found!');
-      const messages = webhook.client.channels.cache.get('834546271356321822').messages.fetch({ limit: 20 });
+      const messages = await webhook.client.channels.cache.get('834546271356321822').messages.fetch({ limit: 20 });
       messages.forEach(async (msg) => {
         var ventId = msg.content.split(' ');
         if (msg.webhookID != null && ventId[2] == id && yes) {
@@ -75,8 +75,7 @@ async function deleteVent(tw, iId, iToken, id) {
       const webhook = webhooks.first();
   
       if (webhook == null) return reply(iId, iToken, 'Error:\nNo webhooks found!');
-      const messages = webhook.client.channels.cache.get('833730808686575626').messages.fetch({ limit: 20 });
-      console.log(messages);
+      const messages = await webhook.client.channels.cache.get('833730808686575626').messages.fetch({ limit: 20 });
       messages.forEach(async (msg) => {
         var ventId = msg.content.split(' ');
         if (msg.webhookID != null && ventId[2] == id && yes) {

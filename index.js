@@ -55,7 +55,7 @@ async function deleteVent(tw, iId, iToken, id) {
   try {
     if (tw) {
       var yes = true;
-      const webhooks = await ventCh.fetchWebhooks();
+      const webhooks = await client.channels.cache.get('834546271356321822').fetchWebhooks();
       const webhook = webhooks.first();
   
       if (webhook == null) return reply(iId, iToken, 'Error:\nNo webhooks found!');
@@ -71,7 +71,7 @@ async function deleteVent(tw, iId, iToken, id) {
       reply(iId, iToken, `The vent was deleted\nIf you believe this is an actually an error contact CactusKing101#2624`);
     } else {
       var yes = true;
-      const webhooks = await ventCh.fetchWebhooks();
+      const webhooks = await client.channels.cache.get('833730808686575626').fetchWebhooks();
       const webhook = webhooks.first();
   
       if (webhook == null) return reply(iId, iToken, 'Error:\nNo webhooks found!');

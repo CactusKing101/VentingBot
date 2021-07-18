@@ -76,6 +76,7 @@ async function deleteVent(tw, iId, iToken, id) {
   
       if (webhook == null) return reply(iId, iToken, 'Error:\nNo webhooks found!');
       const messages = webhook.client.channels.cache.get('833730808686575626').messages.fetch({ limit: 20 });
+      console.log(messages);
       messages.forEach(async (msg) => {
         var ventId = msg.content.split(' ');
         if (msg.webhookID != null && ventId[2] == id && yes) {

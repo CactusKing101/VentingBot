@@ -65,7 +65,7 @@ async function deleteVent(tw, iId, iToken, id) {
           !yes;
         } 
       });
-      reply(iId, iToken, `The vent was deleted\nIf you believe this is an actually an error contact CactusKing101#2624`);
+      reply(iId, iToken, `The vent was deleted\nIf you believe this is an actually an error contact CatusKing#2624`);
     } else {
       var yes = true;
       const messages = await client.channels.cache.get('833730808686575626').messages.fetch({ limit: 20 })
@@ -78,7 +78,7 @@ async function deleteVent(tw, iId, iToken, id) {
           !yes;
         } 
       });
-      reply(iId, iToken, `The vent was deleted\nIf you believe this is an actually an error contact CactusKing101#2624`);
+      reply(iId, iToken, `The vent was deleted\nIf you believe this is an actually an error contact CatusKing#2624`);
     }
   } catch (err) {
     console.warn(err);
@@ -136,7 +136,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
       }
     }
   
-    if (banned) return reply(interaction.id, interaction.token, 'Sorry you have been **banned** from using this bot. If you think this is a mistake or want to appeal, contact CactusKing101#2624. Depression and suicide is not a joke and if you feel you need help please call a suicide hotline.\nhttps://www.opencounseling.com/suicide-hotlines');
+    if (banned) return reply(interaction.id, interaction.token, 'Sorry you have been **banned** from using this bot. If you think this is a mistake or want to appeal, contact CatusKing#2624. Depression and suicide is not a joke and if you feel you need help please call a suicide hotline.\nhttps://www.opencounseling.com/suicide-hotlines');
     if (interaction.data.options[0].value) {
       vent(interaction.member, '834546271356321822', 'trigger warning ', interaction.id, interaction.token, interaction.data.options[1].value);
     } else {
@@ -146,7 +146,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
     if (data.main[interaction.data.options[0].value - 1][2] == interaction.member.user.id) {
       deleteVent(interaction.data.options[1].value, interaction.id, interaction.token, interaction.data.options[0].value);
     } else {
-      reply(interaction.id, interaction.token, `This isn't your vent according to the database\nContact CactusKing101#2624 if you believe this an actual error`);
+      reply(interaction.id, interaction.token, `This isn't your vent according to the database\nContact CatusKing#2624 if you believe this an actual error`);
     }
   }
 });

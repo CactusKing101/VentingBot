@@ -86,7 +86,7 @@ async function deleteVent(tw, iId, iToken, id) {
 }
 
 client.once('ready', () => {
-  client.user.setActivity('SLASH COMMANDS');
+  client.user.setActivity('/vent');
   console.log(`Logged in as ${client.user.tag}`);
   client.api.applications(client.user.id).guilds('830495072876494879').commands.post({data: {
     name: 'vent',
